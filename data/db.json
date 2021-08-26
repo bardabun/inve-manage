@@ -1,17 +1,4 @@
-import './App.css';
-import Navbar from './components/Navbar';
-import React from 'react';
-import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './components/pages/Home';
-import Services from './components/pages/Services';
-import Products from './components/pages/Products';
-import SignUp from './components/pages/signup/SignUp';
-import api from './api/posts'
-import { useState, useEffect } from 'react';
-
-function App() {
-const [posts, setPosts] = useState([
-  {
+{
     "posts": [
       {
         "id": 1,
@@ -39,41 +26,3 @@ const [posts, setPosts] = useState([
       }
     ]
   }
-])
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await api.get('/posts');
-        setPosts(response.data);
-      } catch (err) {
-        if (err.response) {
-          // Not in the 200 response range 
-          console.log(err.response.data);
-          console.log(err.response.status);
-          console.log(err.response.headers);
-        } else {
-          console.log(`Error: ${err.message}`);
-        }
-      }
-    }
-
-    fetchPosts();
-  }, [])
-
-  return (
-    <>
-    <Router>
-      <Navbar />
-      <Switch>
-          <Route path='/' exact component={Home}/>
-          <Route path='/services' component={Services} />
-          <Route path='/products' component={Products} />
-          <Route path='/sign-up' component={SignUp} />
-      </Switch>
-    </Router>
-    </>
-  );
-}
-
-export default App;
